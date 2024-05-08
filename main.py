@@ -1,11 +1,13 @@
-import flet
+import flet as ft
 from flet import (
     Page,
     colors
 )
 
 from app import TaskManager
+from app_layout import AppLayout
 
+# Файл, который отвечает за "разворот" приложения. Именно его мы запускаем
 if __name__ == "__main__":
     def main(page: Page):
         page.title = "TaskManager"
@@ -13,8 +15,15 @@ if __name__ == "__main__":
         page.bgcolor = colors.GREY_100
         page.fonts = {"Comfortaa": "assets/fonts/Comfortaa-Regular.ttf",
                       "Comfortaa_Bold": "assets/fonts/Comfortaa-Bold.ttf"}
-        app = TaskManager(page)
-        page.add(app)
+        page.add(
+            ft.Row(
+                controls=[
+                    TaskManager(page),
+                    AppLayout(page)
+                ]
+            )
+        )
+        page.add()
         page.update()
 
-    flet.app(target=main)
+    ft.app(target=main)
