@@ -6,8 +6,8 @@ from flet import (
 
 from app import TaskManager
 from app_layout import AppLayout
-from sidebar import Sidebar
 
+# Файл, который отвечает за "разворот" приложения. Именно его мы запускаем
 if __name__ == "__main__":
     def main(page: Page):
         page.title = "TaskManager"

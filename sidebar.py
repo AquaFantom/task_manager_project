@@ -10,10 +10,10 @@ from flet import (
     icons,
     padding,
     margin,
+    Icon
 )
-from flet_core import Icon
 
-
+# Класс для боковой панели. Здесь описано всё её содержимое
 class Sidebar(UserControl):
     def __init__(self, page):
         super().__init__()
