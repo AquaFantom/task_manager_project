@@ -18,7 +18,7 @@ if __name__ == "__main__":
         page.add(
             ft.Row(
                 controls=[
-                    TaskManager(page),
+                    #TaskManager(page),
                     AppLayout(page)
                 ]
             )

@@ -8,6 +8,7 @@ from flet import (
     IconButton,
     colors,
     icons,
+    AppBar
 )
 
 from sidebar import Sidebar
@@ -17,10 +18,22 @@ class AppLayout(Row):
     def __init__(self, page: Page, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.page = page
-        self.toggle_nav_rail_button = IconButton(
-            icon=icons.ARROW_FORWARD_IOS_ROUNDED, icon_color=colors.BLUE_GREY_400, selected=False,
-            selected_icon=icons.ARROW_BACK_IOS_ROUNDED, on_click=self.toggle_nav_rail)
+        self.appbar = AppBar(
+            leading=IconButton(icons.TABLE_ROWS_ROUNDED,
+                               icon_color=colors.WHITE,
+                               icon_size=30,
+                               on_click=self.toggle_nav_rail),
+            leading_width=75,
+            title=Text("TaskManager", size=32, text_align="start", color=colors.WHITE, font_family="Comfortaa_Bold"),
+            center_title=False,
+            toolbar_height=75,
+            bgcolor=colors.LIGHT_BLUE_500
+
+        )
+        self.page.appbar = self.appbar
+
         self.sidebar = Sidebar(page)
+
         self._active_view: Control = Column(
             controls=[
                 Text("Active View")
@@ -28,9 +41,10 @@ class AppLayout(Row):
             alignment=ft.alignment.center,
             horizontal_alignment=ft.alignment.center
         )
+
         self.controls = [
             self.sidebar,
-            self.toggle_nav_rail_button,
+            # self.appbar.leading,
             self.active_view,
         ]
 
@@ -45,5 +59,6 @@ class AppLayout(Row):
 
     def toggle_nav_rail(self, e):
         self.sidebar.visible = not self.sidebar.visible
-        self.toggle_nav_rail_button.selected = not self.toggle_nav_rail_button.selected
+        self.appbar.leading.selected = not self.appbar.leading.selected
         self.page.update()
+
