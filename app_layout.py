@@ -1,8 +1,7 @@
+import flet as ft
 from flet import (
     Control,
     Column,
-    Container,
-    IconButton,
     Page,
     Row,
     Text,
@@ -10,23 +9,30 @@ from flet import (
     colors,
     icons,
 )
+
 from sidebar import Sidebar
 
 
 class AppLayout(Row):
-    def __init__(self, app, page: Page, *args, **kwargs):
+    def __init__(self, page: Page, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.app = app
         self.page = page
         self.toggle_nav_rail_button = IconButton(
             icon=icons.ARROW_FORWARD_IOS_ROUNDED, icon_color=colors.BLUE_GREY_400, selected=False,
             selected_icon=icons.ARROW_BACK_IOS_ROUNDED, on_click=self.toggle_nav_rail)
-        self.sidebar = Sidebar(self, page)
-        self._active_view: Control = Column(controls=[
-            Text("Active View")
-        ], alignment="center", horizontal_alignment="center")
-        self.controls = [self.sidebar,
-                         self.toggle_nav_rail_button, self.active_view]
+        self.sidebar = Sidebar(page)
+        self._active_view: Control = Column(
+            controls=[
+                Text("Active View")
+            ],
+            alignment=ft.alignment.center,
+            horizontal_alignment=ft.alignment.center
+        )
+        self.controls = [
+            self.sidebar,
+            self.toggle_nav_rail_button,
+            self.active_view,
+        ]
 
     @property
     def active_view(self):
