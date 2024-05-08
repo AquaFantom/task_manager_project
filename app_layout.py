@@ -19,8 +19,8 @@ class AppLayout(Row):
         self.app = app
         self.page = page
         self.toggle_nav_rail_button = IconButton(
-            icon=icons.ARROW_CIRCLE_LEFT, icon_color=colors.BLUE_GREY_400, selected=False,
-            selected_icon=icons.ARROW_CIRCLE_RIGHT, on_click=self.toggle_nav_rail)
+            icon=icons.ARROW_FORWARD_IOS_ROUNDED, icon_color=colors.BLUE_GREY_400, selected=False,
+            selected_icon=icons.ARROW_BACK_IOS_ROUNDED, on_click=self.toggle_nav_rail)
         self.sidebar = Sidebar(self, page)
         self._active_view: Control = Column(controls=[
             Text("Active View")
