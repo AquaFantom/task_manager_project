@@ -48,7 +48,7 @@ class Sidebar(UserControl):
     def build(self):
         self.view = Container(
             content=self.top_nav_rail,
-            padding=padding.only(left=-10, bottom=10, top=10),
+            padding=padding.only(left=0, bottom=10, top=15),
             margin=margin.all(-10),
             width=self.page.width * 0.2,
             bgcolor=colors.GREY_200,
