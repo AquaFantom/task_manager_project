@@ -12,7 +12,14 @@ from flet import (
     ButtonStyle,
     colors,
     RoundedRectangleBorder,
-    TextField
+    TextField,
+    PopupMenuButton,
+    PopupMenuItem,
+    border_radius,
+    border,
+    TextThemeStyle,
+    TextAlign,
+    MainAxisAlignment
 
 )
 
@@ -44,7 +51,7 @@ class AppLayout(Row):
         self.all_boards_view = Column([
             Row([
                 Container(
-                    Text(value="Ваши доски", style="headlineMedium"),
+                    Text(value="Ваши доски", style=TextThemeStyle.HEADLINE_MEDIUM),
                     expand=True,
                     padding=padding.only(top=15)),
                 Container(
@@ -86,4 +93,35 @@ class AppLayout(Row):
     def toggle_nav_rail(self, e):
         self.sidebar.visible = not self.sidebar.visible
         self.page.update()
+
+    def hydrate_all_boards_view(self):
+        self.all_boards_view.controls[-1] = Row([
+            Container(
+                content=Row([
+                    Container(
+                        content=Text(value=''.name), data='', expand=True, on_click= ''),
+                    Container(
+                        content=PopupMenuButton( #контейнер с кнопкой всплывающего меню
+                            items=[
+                                PopupMenuItem(
+                                    content=Text(value="Удалить", style=TextThemeStyle.LABEL_MEDIUM, text_align=TextAlign.CENTER),
+                                    on_click= '', data= ''),
+                                PopupMenuItem(),
+                                PopupMenuItem(
+                                    content=Text(value="Архивировать", style=TextThemeStyle.LABEL_MEDIUM, text_align=TextAlign.CENTER),
+                                )
+                            ]
+                        ),
+                        padding=padding.only(right=-10),
+                        border_radius=border_radius.all(3)
+                    )], alignment=MainAxisAlignment.SPACE_BETWEEN),
+                border=border.all(1, colors.BLACK38),
+                border_radius=border_radius.all(5),
+                bgcolor=colors.WHITE60,
+                padding=padding.all(10),
+                width=250,
+                #data=b
+            ) #for b in self.store.get_boards()
+        ], wrap=True)
+        #self.sidebar.sync_board_destinations()
 
