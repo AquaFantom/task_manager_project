@@ -5,6 +5,16 @@ from flet import (
     Page,
     Row,
     Text,
+    Container,
+    TextButton,
+    icons,
+    colors,
+    padding,
+    ButtonStyle,
+    RoundedRectangleBorder,
+    TextField,
+    PopupMenuButton,
+    PopupMenuItem
 )
 
 from sidebar import Sidebar
@@ -29,6 +39,75 @@ class AppLayout(Row):
             self.sidebar,
             self.active_view,
         ]
+
+        self.members_view = Text("members view")
+
+        self.all_boards_view = Column([
+            Row([
+                Container(
+                    Text(value="Your Boards"),
+                    expand=True,
+                    padding=padding.only(top=15)),
+                Container(
+                    TextButton(
+                        "Add new board",
+                        icon=icons.ADD,
+                        on_click='',
+                        style=ButtonStyle(
+                            bgcolor={
+                                "": colors.BLUE_200,
+                                "hovered": colors.BLUE_400
+                            },
+                            shape={
+                                "": RoundedRectangleBorder(radius=3)
+                            }
+                        )
+                    ),
+
+                    padding=padding.only(right=50, top=15))
+            ]),
+            Row([
+                TextField(hint_text="Search all boards", autofocus=False, content_padding=padding.only(left=10),
+                          width=200, height=40, text_size=12,
+                          border_color=colors.BLACK26, focused_border_color=colors.BLUE_ACCENT,
+                          suffix_icon=icons.SEARCH)
+            ]),
+            Row([Text("No Boards to Display")])
+        ], expand=True)
+
+    def hydrate_all_boards_view(self):
+        self.all_boards_view.controls[-1] = Row([
+            Container(
+                content=Row([
+                    Container(
+                        content=Text(value=b.name), data=b, expand=True, on_click=self.board_click),
+                    Container(
+                        content=PopupMenuButton(
+                            items=[
+                                PopupMenuItem(
+                                    content=Text(value="Delete", style="labelMedium",
+                                                 text_align="center"),
+                                    on_click=self.app.delete_board, data=b),
+                                PopupMenuItem(),
+                                PopupMenuItem(
+                                    content=Text(value="Archive", style="labelMedium",
+                                                 text_align="center"),
+                                )
+                            ]
+                        ),
+                        padding=padding.only(right=-10),
+                        border_radius=ft.border_radius.all(3)
+                    )], alignment="spaceBetween"),
+                border=ft.border.all(1, colors.BLACK38),
+                border_radius=ft.border_radius.all(5),
+                bgcolor=colors.WHITE60,
+                padding=padding.all(10),
+                width=250,
+                data=b
+            ) for b in self.store.get_boards()
+        ], wrap=True)
+        self.sidebar.sync_board_destinations()
+
 
     @property
     def active_view(self):

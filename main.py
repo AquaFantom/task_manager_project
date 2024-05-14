@@ -12,7 +12,7 @@ if __name__ == "__main__":
     def main(page: Page):
         app_layout_ref = ft.Ref[AppLayout]()
 
-        app_layout = AppLayout(page, ref=app_layout_ref)
+        app_layout = AppLayout(page=page, ref=app_layout_ref)
         TaskManager(page, app_layout_ref)
 
         page.title = "TaskManager"
@@ -30,5 +30,6 @@ if __name__ == "__main__":
         )
         page.add()
         page.update()
+
 
     ft.app(target=main)
