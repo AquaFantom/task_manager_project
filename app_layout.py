@@ -99,13 +99,13 @@ class AppLayout(Row):
             Container(
                 content=Row([
                     Container(
-                        content=Text(value=''.name), data='', expand=True, on_click= ''),
+                        content=Text(value=b.name), data=b, expand=True, on_click= ''),
                     Container(
                         content=PopupMenuButton( #контейнер с кнопкой всплывающего меню
                             items=[
                                 PopupMenuItem(
                                     content=Text(value="Удалить", style=TextThemeStyle.LABEL_MEDIUM, text_align=TextAlign.CENTER),
-                                    on_click= '', data= ''),
+                                    on_click= '', data=b),
                                 PopupMenuItem(),
                                 PopupMenuItem(
                                     content=Text(value="Архивировать", style=TextThemeStyle.LABEL_MEDIUM, text_align=TextAlign.CENTER),
