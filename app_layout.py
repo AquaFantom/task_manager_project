@@ -34,17 +34,10 @@ class AppLayout(Row):
         self.sidebar = Sidebar(page)
 
         self._active_view: Control = Column(
-            controls=[
-                Text("Active View")
-            ],
+            controls=[],
             alignment=ft.alignment.center,
             horizontal_alignment=ft.alignment.center
         )
-
-        self.controls = [
-            self.sidebar,
-            self.active_view,
-        ]
 
         self.members_view = Text("members view")
 
@@ -58,7 +51,7 @@ class AppLayout(Row):
                     TextButton(
                         "Добавить новую доску",
                         icon=icons.ADD,
-                        on_click= '',
+                        on_click='',
                         style=ButtonStyle(
                             bgcolor={
                                 "": colors.BLUE_200,
@@ -69,7 +62,6 @@ class AppLayout(Row):
                             }
                         )
                     ),
-
                     padding=padding.only(right=50, top=15))
             ]),
             Row([
@@ -80,6 +72,12 @@ class AppLayout(Row):
             ]),
             Row([Text("Нет подходящих досок для отображения")])
         ], expand=True)
+
+        self.controls = [
+            self.sidebar,
+            self.active_view,
+            self.all_boards_view
+        ]
 
     @property
     def active_view(self):
@@ -99,16 +97,18 @@ class AppLayout(Row):
             Container(
                 content=Row([
                     Container(
-                        content=Text(value=b.name), data=b, expand=True, on_click= ''),
+                        content=Text(value=b), data=b, expand=True, on_click=''),
                     Container(
-                        content=PopupMenuButton( #контейнер с кнопкой всплывающего меню
+                        content=PopupMenuButton(  # контейнер с кнопкой всплывающего меню
                             items=[
                                 PopupMenuItem(
-                                    content=Text(value="Удалить", style=TextThemeStyle.LABEL_MEDIUM, text_align=TextAlign.CENTER),
-                                    on_click= '', data=b),
+                                    content=Text(value="Удалить", style=TextThemeStyle.LABEL_MEDIUM,
+                                                 text_align=TextAlign.CENTER),
+                                    on_click='', data=b),
                                 PopupMenuItem(),
                                 PopupMenuItem(
-                                    content=Text(value="Архивировать", style=TextThemeStyle.LABEL_MEDIUM, text_align=TextAlign.CENTER),
+                                    content=Text(value="Архивировать", style=TextThemeStyle.LABEL_MEDIUM,
+                                                 text_align=TextAlign.CENTER),
                                 )
                             ]
                         ),
@@ -120,8 +120,7 @@ class AppLayout(Row):
                 bgcolor=colors.WHITE60,
                 padding=padding.all(10),
                 width=250,
-                #data=b
-            ) #for b in self.store.get_boards()
+                data=b
+            ) for b in ["Board"]  # self.store.get_boards()
         ], wrap=True)
-        #self.sidebar.sync_board_destinations()
-
+        self.sidebar.sync_board_destinations()

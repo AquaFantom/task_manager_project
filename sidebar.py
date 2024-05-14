@@ -10,8 +10,10 @@ from flet import (
     icons,
     padding,
     margin,
-    Icon
+    Icon,
+    TextField
 )
+
 
 # Класс для боковой панели. Здесь описано всё её содержимое
 class Sidebar(UserControl):
@@ -65,6 +67,34 @@ class Sidebar(UserControl):
             alignment=alignment.center_left,
         )
         return self.view
+
+    def sync_board_destinations(self):
+        #boards = self.store.get_boards()
+        boards = ["Board"]
+        self.bottom_nav_rail.destinations = []
+        for i in range(len(boards)):
+            b = boards[i]
+            self.bottom_nav_rail.destinations.append(
+                NavigationRailDestination(
+                    label_content=TextField(
+                        value=b[0],
+                        hint_text=b[0],
+                        text_size=12,
+                        read_only=True,
+                        #on_focus=self.board_name_focus,
+                        #on_blur=self.board_name_blur,
+                        border="none",
+                        height=50,
+                        width=150,
+                        text_align="start",
+                        data=i
+                    ),
+                    label= "Board",#b.name,
+                    selected_icon=icons.CHEVRON_RIGHT_ROUNDED,
+                    icon=icons.CHEVRON_RIGHT_OUTLINED
+                )
+            )
+        self.view.update()
 
     def top_nav_change(self, e):
         self.top_nav_rail.selected_index = e.control.selected_index
