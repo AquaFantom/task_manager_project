@@ -45,6 +45,15 @@ class Sidebar(UserControl):
             expand=True,
         )
 
+        self.bottom_nav_rail = NavigationRail(
+            selected_index=None,
+            label_type=ft.NavigationRailLabelType.ALL,
+            on_change=self.bottom_nav_change,
+            extended=True,
+            expand=True,
+            bgcolor=colors.BLUE_GREY,
+        )
+
     def build(self):
         self.view = Container(
             content=self.top_nav_rail,
@@ -60,3 +69,11 @@ class Sidebar(UserControl):
     def top_nav_change(self, e):
         self.top_nav_rail.selected_index = e.control.selected_index
         self.update()
+
+    def bottom_nav_change(self, e):
+        index = e if (type(e) == int) else e.control.selected_index
+        self.top_nav_rail.selected_index = None
+        self.bottom_nav_rail.selected_index = index
+        self.page.route = f"/board/{index}"
+        self.view.update()
+        self.page.update()
