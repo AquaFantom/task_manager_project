@@ -5,6 +5,15 @@ from flet import (
     Page,
     Row,
     Text,
+    Container,
+    padding,
+    TextButton,
+    icons,
+    ButtonStyle,
+    colors,
+    RoundedRectangleBorder,
+    TextField
+
 )
 
 from sidebar import Sidebar
@@ -29,6 +38,41 @@ class AppLayout(Row):
             self.sidebar,
             self.active_view,
         ]
+
+        self.members_view = Text("members view")
+
+        self.all_boards_view = Column([
+            Row([
+                Container(
+                    Text(value="Ваши доски", style="headlineMedium"),
+                    expand=True,
+                    padding=padding.only(top=15)),
+                Container(
+                    TextButton(
+                        "Добавить новую доску",
+                        icon=icons.ADD,
+                        on_click= '',
+                        style=ButtonStyle(
+                            bgcolor={
+                                "": colors.BLUE_200,
+                                "hovered": colors.BLUE_400
+                            },
+                            shape={
+                                "": RoundedRectangleBorder(radius=3)
+                            }
+                        )
+                    ),
+
+                    padding=padding.only(right=50, top=15))
+            ]),
+            Row([
+                TextField(hint_text="Поиск доски", autofocus=False, content_padding=padding.only(left=10),
+                          width=200, height=40, text_size=12,
+                          border_color=colors.BLACK26, focused_border_color=colors.BLUE_ACCENT,
+                          suffix_icon=icons.SEARCH)
+            ]),
+            Row([Text("Нет подходящих досок для отображения")])
+        ], expand=True)
 
     @property
     def active_view(self):
