@@ -45,7 +45,6 @@ class AppLayout(Row):
             Row([
                 Container(
                     Text(value="Ваши доски", style=TextThemeStyle.HEADLINE_MEDIUM),
-                    expand=True,
                     padding=padding.only(top=15)),
                 Container(
                     TextButton(
@@ -62,7 +61,8 @@ class AppLayout(Row):
                             }
                         )
                     ),
-                    padding=padding.only(right=50, top=15))
+                    padding=padding.only(right=50, top=15),
+                )
             ]),
             Row([
                 TextField(hint_text="Поиск доски", autofocus=False, content_padding=padding.only(left=10),
@@ -71,13 +71,15 @@ class AppLayout(Row):
                           suffix_icon=icons.SEARCH)
             ]),
             Row([Text("Нет подходящих досок для отображения")])
-        ], expand=True)
+        ], alignment=ft.MainAxisAlignment.START)
 
         self.controls = [
             self.sidebar,
             self.active_view,
             self.all_boards_view
         ]
+
+        self.hydrate_all_boards_view()
 
     @property
     def active_view(self):

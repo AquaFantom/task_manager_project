@@ -77,8 +77,8 @@ class Sidebar(UserControl):
             self.bottom_nav_rail.destinations.append(
                 NavigationRailDestination(
                     label_content=TextField(
-                        value=b[0],
-                        hint_text=b[0],
+                        value=b,
+                        hint_text=b,
                         text_size=12,
                         read_only=True,
                         #on_focus=self.board_name_focus,
@@ -89,12 +89,12 @@ class Sidebar(UserControl):
                         text_align="start",
                         data=i
                     ),
-                    label= "Board",#b.name,
+                    label="Board",#b.name,
                     selected_icon=icons.CHEVRON_RIGHT_ROUNDED,
                     icon=icons.CHEVRON_RIGHT_OUTLINED
                 )
             )
-        self.view.update()
+        self.page.update()
 
     def top_nav_change(self, e):
         self.top_nav_rail.selected_index = e.control.selected_index
