@@ -11,9 +11,10 @@ from app_layout import AppLayout
 if __name__ == "__main__":
     def main(page: Page):
         app_layout_ref = ft.Ref[AppLayout]()
+        app_ref = ft.Ref[TaskManager]()
 
-        app_layout = AppLayout(page, ref=app_layout_ref)
-        TaskManager(page, app_layout_ref)
+        app_layout = AppLayout(page, app_ref=app_ref, layout_ref=app_layout_ref)
+        TaskManager(page, app_ref=app_ref, layout_ref=app_layout_ref)
 
         page.title = "TaskManager"
         page.padding = 0

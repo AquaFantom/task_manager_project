@@ -23,12 +23,13 @@ from flet import (
 
 )
 
+import app
 from sidebar import Sidebar
 
 
 class AppLayout(Row):
-    def __init__(self, page: Page, ref, *args, **kwargs):
-        super().__init__(*args, **kwargs, ref=ref)
+    def __init__(self, page: Page, app_ref, layout_ref, *args, **kwargs): #FIXME: надо что-то сделать с ссылками...
+        super().__init__(*args, **kwargs, ref=layout_ref)
         self.page = page
 
         self.sidebar = Sidebar(page)
@@ -50,7 +51,7 @@ class AppLayout(Row):
                     TextButton(
                         "Добавить новую доску",
                         icon=icons.ADD,
-                        on_click='',
+                        on_click=app_ref.current.add_board, #FIXME: необходимо доставать функцию add_board из app
                         style=ButtonStyle(
                             bgcolor={
                                 "": colors.BLUE_200,
