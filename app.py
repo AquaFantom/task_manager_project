@@ -5,6 +5,7 @@ from flet_core import Page, AppBar, Text, icons, colors, Row, IconButton, Column
 class TaskManager(Row):
     def __init__(self, page: Page, app_ref, layout_ref):
         super().__init__(ref=app_ref)
+        self.layout_ref = layout_ref
         self.page = page
         self.appbar = AppBar(
             leading=IconButton(icons.TABLE_ROWS_ROUNDED,
@@ -23,7 +24,7 @@ class TaskManager(Row):
 
     def add_board(self, e):
         def close_dlg(e):
-            if (hasattr(e.control, "text") and not e.control.text == "Cancel") or (
+            if (hasattr(e.control, "text") and not e.control.text == "Отмена") or (
                     type(e.control) is ft.TextField and e.control.value != ""
             ):
                 self.create_new_board(dialog_text.value)
@@ -38,22 +39,22 @@ class TaskManager(Row):
             self.page.update()
 
         dialog_text = TextField(
-            label="New Board Name", on_submit=close_dlg, on_change=textfield_change
+            label="Введите название", on_submit=close_dlg, on_change=textfield_change
         )
         create_button = ft.ElevatedButton(
-            text="Create", bgcolor=colors.BLUE_200, on_click=close_dlg, disabled=True
+            text="Создать", bgcolor=colors.BLUE_200, on_click=close_dlg, disabled=True
         )
         dialog = ft.AlertDialog(
-            title=Text("Name your new board"),
+            title=Text("Введите название!"),
             content=Column(
                 [
                     dialog_text,
                     Row(
                         [
-                            ft.ElevatedButton(text="Cancel", on_click=close_dlg),
+                            ft.ElevatedButton(text="Отмена", on_click=close_dlg),
                             create_button,
                         ],
-                        alignment="spaceBetween",
+                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     ),
                 ],
                 tight=True,
@@ -65,13 +66,13 @@ class TaskManager(Row):
         self.page.update()
         dialog_text.focus()
 
-
     def create_new_board(self, board_name):
-        new_board = Board(self, self.store, board_name)
-        self.store.add_board(new_board)
-        self.layout.hydrate_all_boards_view()
-
+        # new_board = Board(self, self.store, board_name)
+        new_board = board_name
+        # self.store.add_board(new_board)
+        self.layout_ref.current.hydrate_all_boards_view()
 
     def delete_board(self, e):
-        self.store.remove_board(e.control.data)
-        self.layout.set_all_boards_view()
+        return
+        # self.store.remove_board(e.control.data)
+        # self.layout.set_all_boards_view()
